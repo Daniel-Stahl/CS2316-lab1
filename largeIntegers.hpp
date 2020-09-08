@@ -6,13 +6,20 @@ using namespace std;
 
 class largeIntegers {
 private:
-    char num;
-    vector<char>num1;
-    vector<char>num2;
+    string num;
+    vector<char>largeNum;
     
 public:
     largeIntegers();
-    largeIntegers(char newNum);
+    largeIntegers(string newNum);
     friend ostream& operator<< (ostream& output, const largeIntegers& lgInt);
     friend istream& operator>> (istream& input, largeIntegers& lgInt);
+    
+    largeIntegers operator+(const largeIntegers& lgInt);
+    
+    
+    
+    void outputLargeIntegers();
+    
+    
 };
