@@ -28,11 +28,36 @@ istream& operator>> (istream& input, largeIntegers& lgInt) {
 
 largeIntegers largeIntegers::operator+(const largeIntegers& lgInt) {
     largeIntegers retInt;
+    
     int tempSize = 0;
+    int diffSize = 0;
     int x = 0;
     
+    if (this->largeNum.size() > lgInt.largeNum.size()) {
+        diffSize = this->largeNum.size() - lgInt.largeNum.size();
+        tempSize = this->largeNum.size() - diffSize;
+        
+        while (x < diffSize) {
+            retInt.largeNum.push_back(this->largeNum.at(x));
+            x++;
+        }
+        
+        for (x = 0; x < lgInt.largeNum.size(); x++) {
+            char tempNum = (this->largeNum.at(diffSize+x) + lgInt.largeNum.at(x)) - '0';
+            
+            if (tempNum < '9') {
+                retInt.largeNum.push_back(tempNum);
+            } else {
+                
+            }
+        }
+        
+    } else {
+        diffSize = lgInt.largeNum.size() - this->largeNum.size();
+    }
     
     
+
     
     
     return retInt;

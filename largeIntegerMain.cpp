@@ -4,6 +4,7 @@ int main() {
     
     largeIntegers num1;
     largeIntegers num2;
+    largeIntegers newNum;
     
     cout << "Hello" << endl;
     
@@ -12,5 +13,8 @@ int main() {
     
     cin >> num2;
     cout << num2;
+    
+    newNum = num1 + num2;
+    
     
 }
