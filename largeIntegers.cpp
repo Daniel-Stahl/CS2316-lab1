@@ -17,20 +17,28 @@ istream& operator>> (istream& input, largeIntegers& lgInt) {
     
     input >> lgInt.num;
     
-    int stringSize = lgInt.num.size();
-    while (x < stringSize) {
-        lgInt.largeNum.push_back(lgInt.num.at(x));
-        x++;
+    int stringSize = lgInt.num.size() - 1;
+    while (stringSize >= 0) {
+        lgInt.largeNum.push_back(lgInt.num.at(stringSize));
+        stringSize--;
     }
     
     return input;
 }
 
-largeIntegers operator+(const largeIntegers& lgInt) {
-    largeIntegers largeInt;
+largeIntegers largeIntegers::operator+(const largeIntegers& lgInt) {
+    largeIntegers retInt;
+    int tempSize = 0;
+    int x = 0;
     
     
     
-    return largeInt;
-};
+    
+    
+    return retInt;
+}
+
+int largeIntegers::GetNumSize() const {
+    return num.size();
+}
 
