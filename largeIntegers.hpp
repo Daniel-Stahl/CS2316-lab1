@@ -19,7 +19,7 @@ public:
     
     largeIntegers operator+(const largeIntegers& lgInt);
     int GetNumSize() const;
-    
+    char DecimalConverter(int decimal);
     
     void outputLargeIntegers();
     
