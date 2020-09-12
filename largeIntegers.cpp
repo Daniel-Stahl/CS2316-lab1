@@ -121,6 +121,7 @@ largeIntegers largeIntegers::operator-(const largeIntegers& lgInt) {
         num1 = lgInt;
         num2 = *this;
         num1Size = num1.largeNum.size();
+        num2Size = num2.largeNum.size();
     }
     
     while (x < num1Size) {
