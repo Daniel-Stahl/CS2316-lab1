@@ -90,15 +90,13 @@ largeIntegers largeIntegers::operator-(const largeIntegers& lgInt) {
     largeIntegers retInt;
     largeIntegers num1 = *this;
     largeIntegers num2 = lgInt;
-    int vecSize, x = 0;
+    int twoDecimal, x = 0;
     char tempNum;
     int num1Size = this->largeNum.size();
     int num2Size = lgInt.largeNum.size();
     bool isNegative = false;
     
-    if (num1Size > num2Size) {
-        vecSize = this->largeNum.size();
-    } else if (num1Size == num2Size) {
+    if (num1Size == num2Size) {
         bool isLarger = false;
         
         while (num1Size > x && !isLarger) {
@@ -116,37 +114,44 @@ largeIntegers largeIntegers::operator-(const largeIntegers& lgInt) {
             }
         }
         
-        vecSize = lgInt.largeNum.size();
+        num1Size = num1.largeNum.size();
         
-    } else {
-        vecSize = lgInt.largeNum.size();
+    } else if (num1Size < num2Size) {
+        isNegative = true;
+        num1 = lgInt;
+        num2 = *this;
+        num1Size = num1.largeNum.size();
     }
     
-    
-    num1Size = num1.largeNum.size();
-    num2Size = num2.largeNum.size();
-    
-    while (x < vecSize) {
+    while (x < num1Size) {
         if (num1Size > x && num2Size > x) {
             if (num1.largeNum.at(x) < num2.largeNum.at(x)) {
                 num1.largeNum.at(x+1)--;
                 tempNum = num1.largeNum.at(x) + 10;
-                tempNum = (num1.largeNum.at(x) - num2.largeNum.at(x)) - '0';
+                tempNum = (tempNum - num2.largeNum.at(x)) + '0';
+                //twoDecimal = (int)(tempNum);
+                //tempNum = DecimalConverter(twoDecimal);
             } else {
-                tempNum = (num1.largeNum.at(x) - num2.largeNum.at(x)) - '0';
+                tempNum = (num1.largeNum.at(x) - num2.largeNum.at(x)) + '0';
             }
             
             retInt.largeNum.push_back(tempNum);
         } else if (num1Size > x ) {
-            tempNum = num1.largeNum.at(x);
-            retInt.largeNum.push_back(tempNum);
+            if (num1.largeNum.at(x) != '0') {
+                tempNum = num1.largeNum.at(x);
+                retInt.largeNum.push_back(tempNum);
+            }
         } else {
-            
+            if (isNegative) {
+                retInt.largeNum.push_back('-');
+            }
         }
         
         x++;
     }
     
+    retInt.num.append(retInt.largeNum.rbegin(), retInt.largeNum.rend());
+    cout << this->num + " - " + lgInt.num + " = " + retInt.num + "\n";
     
     return retInt;
 }
