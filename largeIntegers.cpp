@@ -129,25 +129,25 @@ largeIntegers largeIntegers::operator-(const largeIntegers& lgInt) {
                 num1.largeNum.at(x+1)--;
                 tempNum = num1.largeNum.at(x) + 10;
                 tempNum = (tempNum - num2.largeNum.at(x)) + '0';
-                //twoDecimal = (int)(tempNum);
-                //tempNum = DecimalConverter(twoDecimal);
             } else {
                 tempNum = (num1.largeNum.at(x) - num2.largeNum.at(x)) + '0';
             }
             
             retInt.largeNum.push_back(tempNum);
-        } else if (num1Size > x ) {
-            if (num1.largeNum.at(x) != '0') {
-                tempNum = num1.largeNum.at(x);
-                retInt.largeNum.push_back(tempNum);
-            }
         } else {
-            if (isNegative) {
-                retInt.largeNum.push_back('-');
-            }
+            tempNum = num1.largeNum.at(x);
+            retInt.largeNum.push_back(tempNum);
         }
         
         x++;
+    }
+    
+    if (retInt.largeNum.at(x-1) == '0') {
+        retInt.largeNum.pop_back();
+    }
+    
+    if (isNegative) {
+        retInt.largeNum.push_back('-');
     }
     
     retInt.num.append(retInt.largeNum.rbegin(), retInt.largeNum.rend());
