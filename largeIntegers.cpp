@@ -15,10 +15,20 @@ istream& operator>> (istream& input, largeIntegers& lgInt) {
     
     input >> lgInt.num;
     
-    int stringSize = lgInt.num.size() - 1;
-    while (stringSize >= 0) {
-        lgInt.largeNum.push_back(lgInt.num.at(stringSize));
+    int stringSize = lgInt.num.size();
+    
+    if (stringSize > 49 ) {
+        lgInt.num = '0';
+        lgInt.largeNum.push_back('0');
+        
+        cout << "This number has more than 50 digits. Number is set to 0\n";
+    } else {
         stringSize--;
+        
+        while (stringSize >= 0) {
+            lgInt.largeNum.push_back(lgInt.num.at(stringSize));
+            stringSize--;
+        }
     }
     
     return input;
