@@ -116,8 +116,6 @@ largeIntegers largeIntegers::operator-(const largeIntegers& lgInt) {
             }
         }
         
-        
-        
         vecSize = lgInt.largeNum.size();
         
     } else {
@@ -125,23 +123,28 @@ largeIntegers largeIntegers::operator-(const largeIntegers& lgInt) {
     }
     
     
+    num1Size = num1.largeNum.size();
+    num2Size = num2.largeNum.size();
     
     while (x < vecSize) {
-        if (this->largeNum.size() > x && lgInt.largeNum.size() > x) {
-            if (num1Size == num2Size) {
-                
+        if (num1Size > x && num2Size > x) {
+            if (num1.largeNum.at(x) < num2.largeNum.at(x)) {
+                num1.largeNum.at(x+1)--;
+                tempNum = num1.largeNum.at(x) + 10;
+                tempNum = (num1.largeNum.at(x) - num2.largeNum.at(x)) - '0';
+            } else {
+                tempNum = (num1.largeNum.at(x) - num2.largeNum.at(x)) - '0';
             }
             
-            
-            tempNum = (this->largeNum.at(x) - lgInt.largeNum.at(x)) - '0';
-        } else if (this->largeNum.size() > x ) {
-            
+            retInt.largeNum.push_back(tempNum);
+        } else if (num1Size > x ) {
+            tempNum = num1.largeNum.at(x);
+            retInt.largeNum.push_back(tempNum);
         } else {
             
         }
         
-        
-        
+        x++;
     }
     
     
