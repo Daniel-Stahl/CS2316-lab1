@@ -25,7 +25,7 @@ istream& operator>> (istream& input, largeIntegers& lgInt) {
 }
 
 largeIntegers largeIntegers::operator+(const largeIntegers& lgInt) {
-    largeIntegers retInt;
+    largeIntegers retNum;
     int diffSize = 0;
     bool plusOne = false;
     int x = 0;
@@ -49,12 +49,12 @@ largeIntegers largeIntegers::operator+(const largeIntegers& lgInt) {
             }
             
             if (tempNum <= '9') {
-                retInt.largeNum.push_back(tempNum);
+                retNum.largeNum.push_back(tempNum);
                 plusOne = false;
             } else {
                 twoDigits = (int)(tempNum);
                 tempNum = DecimalConverter(twoDigits);
-                retInt.largeNum.push_back(tempNum);
+                retNum.largeNum.push_back(tempNum);
                 plusOne = true;
             }
         } else if (this->largeNum.size() > x ) {
@@ -62,14 +62,14 @@ largeIntegers largeIntegers::operator+(const largeIntegers& lgInt) {
             if (plusOne) {
                 tempNum++;
             }
-            retInt.largeNum.push_back(tempNum);
+            retNum.largeNum.push_back(tempNum);
             plusOne = false;
         } else {
             tempNum = lgInt.largeNum.at(x);
             if (plusOne) {
                 tempNum++;
             }
-            retInt.largeNum.push_back(tempNum);
+            retNum.largeNum.push_back(tempNum);
             plusOne = false;
         }
         
@@ -77,24 +77,28 @@ largeIntegers largeIntegers::operator+(const largeIntegers& lgInt) {
     }
     
     if (plusOne) {
-        retInt.largeNum.push_back('1');
+        retNum.largeNum.push_back('1');
     }
     
-    retInt.num.append(retInt.largeNum.rbegin(), retInt.largeNum.rend());
-    cout << this->num + " + " + lgInt.num + " = " + retInt.num + "\n";
+    retNum.num.append(retNum.largeNum.rbegin(), retNum.largeNum.rend());
+    cout << "num1 + num2 = " << retNum;
     
-    return retInt;
+    return retNum;
 }
 
 largeIntegers largeIntegers::operator-(const largeIntegers& lgInt) {
-    largeIntegers retInt;
+    largeIntegers retNum;
     largeIntegers num1 = *this;
     largeIntegers num2 = lgInt;
-    int twoDecimal, x = 0;
+    int x = 0;
     char tempNum;
     int num1Size = this->largeNum.size();
     int num2Size = lgInt.largeNum.size();
     bool isNegative = false;
+    
+    if (num1.num == num2.num) {
+        retNum.num.push_back('0');
+    } else {
     
     if (num1Size == num2Size) {
         bool isLarger = false;
@@ -134,60 +138,115 @@ largeIntegers largeIntegers::operator-(const largeIntegers& lgInt) {
                 tempNum = (num1.largeNum.at(x) - num2.largeNum.at(x)) + '0';
             }
             
-            retInt.largeNum.push_back(tempNum);
+            retNum.largeNum.push_back(tempNum);
         } else {
             tempNum = num1.largeNum.at(x);
-            retInt.largeNum.push_back(tempNum);
+            retNum.largeNum.push_back(tempNum);
         }
         
         x++;
     }
     
-    if (retInt.largeNum.at(x-1) == '0') {
-        retInt.largeNum.pop_back();
+    if (retNum.largeNum.at(x-1) == '0') {
+        retNum.largeNum.pop_back();
     }
     
     if (isNegative) {
-        retInt.largeNum.push_back('-');
+        retNum.largeNum.push_back('-');
+    }
+        
+    retNum.num.append(retNum.largeNum.rbegin(), retNum.largeNum.rend());
+        
     }
     
-    retInt.num.append(retInt.largeNum.rbegin(), retInt.largeNum.rend());
-    cout << this->num + " - " + lgInt.num + " = " + retInt.num + "\n";
+    cout << "num1 - num2 = " << retNum;
     
-    return retInt;
+    return retNum;
 }
 
 largeIntegers largeIntegers::operator==(const largeIntegers& lgInt) {
+    largeIntegers retNum;
     
-    return largeIntegers();
+    if (this->num == lgInt.num) {
+        retNum.num.push_back('1');
+    } else {
+        retNum.num.push_back('0');
+    }
+    
+    cout << "num1 == num2: " << retNum;
+    
+    return retNum;
 }
 
 largeIntegers largeIntegers::operator!=(const largeIntegers& lgInt) {
+    largeIntegers retNum;
     
-    return largeIntegers();
+    if (this->num != lgInt.num) {
+        retNum.num.push_back('1');
+    } else {
+        retNum.num.push_back('0');
+    }
+    
+    cout << "num1 != num2: " << retNum;
+    
+    return retNum;
 }
 
 largeIntegers largeIntegers::operator>(const largeIntegers& lgInt) {
+    largeIntegers retNum;
     
-    return largeIntegers();
+    if (this->num > lgInt.num) {
+        retNum.num.push_back('1');
+    } else {
+        retNum.num.push_back('0');
+    }
+    
+    cout << "num1 > num2: " << retNum;
+    
+    return retNum;
 }
 
 largeIntegers largeIntegers::operator>=(const largeIntegers& lgInt) {
+    largeIntegers retNum;
     
-    return largeIntegers();
+    if (this->num >= lgInt.num) {
+        retNum.num.push_back('1');
+    } else {
+        retNum.num.push_back('0');
+    }
+    
+    cout << "num1 >= num2: " << retNum;
+    
+    return retNum;
 }
 
 largeIntegers largeIntegers::operator<(const largeIntegers& lgInt) {
+    largeIntegers retNum;
     
-    return largeIntegers();
+    if (this->num < lgInt.num) {
+        retNum.num.push_back('1');
+    } else {
+        retNum.num.push_back('0');
+    }
+    
+    cout << "num1 < num2: " << retNum;
+    
+    return retNum;
 }
 
 largeIntegers largeIntegers::operator<=(const largeIntegers& lgInt) {
+    largeIntegers retNum;
     
-    return largeIntegers();
+    if (this->num <= lgInt.num) {
+        retNum.num.push_back('1');
+    } else {
+        retNum.num.push_back('0');
+    }
+    
+    cout << "num1 <= num2: " << retNum;
+    
+    return retNum;
 }
-
-
 
 char largeIntegers::DecimalConverter(int decimal) {
     char c;
