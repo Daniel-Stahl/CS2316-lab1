@@ -14,11 +14,15 @@ public:
     largeIntegers(string newNum);
     friend ostream& operator<< (ostream& output, const largeIntegers& lgInt);
     friend istream& operator>> (istream& input, largeIntegers& lgInt);
-    
-    
-    
     largeIntegers operator+(const largeIntegers& lgInt);
-    int GetNumSize() const;
+    largeIntegers operator-(const largeIntegers& lgInt);
+    largeIntegers operator==(const largeIntegers& lgInt);
+    largeIntegers operator!=(const largeIntegers& lgInt);
+    largeIntegers operator>(const largeIntegers& lgInt);
+    largeIntegers operator>=(const largeIntegers& lgInt);
+    largeIntegers operator<(const largeIntegers& lgInt);
+    largeIntegers operator<=(const largeIntegers& lgInt);
+    
     char DecimalConverter(int decimal);
     
     void outputLargeIntegers();

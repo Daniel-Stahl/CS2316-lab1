@@ -35,10 +35,8 @@ largeIntegers largeIntegers::operator+(const largeIntegers& lgInt) {
     
     if (this->largeNum.size() > lgInt.largeNum.size()) {
         vecSize = this->largeNum.size();
-        diffSize = this->largeNum.size() - lgInt.largeNum.size();
     } else {
         vecSize = lgInt.largeNum.size();
-        diffSize = lgInt.largeNum.size() - this->largeNum.size();
     }
     
     while (x < vecSize) {
@@ -88,9 +86,99 @@ largeIntegers largeIntegers::operator+(const largeIntegers& lgInt) {
     return retInt;
 }
 
-int largeIntegers::GetNumSize() const {
-    return num.size();
+largeIntegers largeIntegers::operator-(const largeIntegers& lgInt) {
+    largeIntegers retInt;
+    largeIntegers num1 = *this;
+    largeIntegers num2 = lgInt;
+    int vecSize, x = 0;
+    char tempNum;
+    int num1Size = this->largeNum.size();
+    int num2Size = lgInt.largeNum.size();
+    bool isNegative = false;
+    
+    if (num1Size > num2Size) {
+        vecSize = this->largeNum.size();
+    } else if (num1Size == num2Size) {
+        bool isLarger = false;
+        
+        while (num1Size > x && !isLarger) {
+            --num1Size;
+            
+            if (num1.largeNum.at(num1Size) > num2.largeNum.at(num1Size)) {
+                isLarger = true;
+            } else if (num1.largeNum.at(num1Size) == num2.largeNum.at(num1Size)) {
+                isLarger = false;
+            } else {
+                isLarger = true;
+                isNegative = true;
+                num1 = lgInt;
+                num2 = *this;
+            }
+        }
+        
+        
+        
+        vecSize = lgInt.largeNum.size();
+        
+    } else {
+        vecSize = lgInt.largeNum.size();
+    }
+    
+    
+    
+    while (x < vecSize) {
+        if (this->largeNum.size() > x && lgInt.largeNum.size() > x) {
+            if (num1Size == num2Size) {
+                
+            }
+            
+            
+            tempNum = (this->largeNum.at(x) - lgInt.largeNum.at(x)) - '0';
+        } else if (this->largeNum.size() > x ) {
+            
+        } else {
+            
+        }
+        
+        
+        
+    }
+    
+    
+    return retInt;
 }
+
+largeIntegers largeIntegers::operator==(const largeIntegers& lgInt) {
+    
+    return largeIntegers();
+}
+
+largeIntegers largeIntegers::operator!=(const largeIntegers& lgInt) {
+    
+    return largeIntegers();
+}
+
+largeIntegers largeIntegers::operator>(const largeIntegers& lgInt) {
+    
+    return largeIntegers();
+}
+
+largeIntegers largeIntegers::operator>=(const largeIntegers& lgInt) {
+    
+    return largeIntegers();
+}
+
+largeIntegers largeIntegers::operator<(const largeIntegers& lgInt) {
+    
+    return largeIntegers();
+}
+
+largeIntegers largeIntegers::operator<=(const largeIntegers& lgInt) {
+    
+    return largeIntegers();
+}
+
+
 
 char largeIntegers::DecimalConverter(int decimal) {
     char c;
