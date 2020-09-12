@@ -37,11 +37,21 @@ istream& operator>> (istream& input, largeIntegers& lgInt) {
 largeIntegers largeIntegers::operator+(const largeIntegers& lgInt) {
     largeIntegers retNum;
     int diffSize = 0;
-    bool plusOne = false;
+    bool plusOne, isNegative = false;
     int x = 0;
     char tempNum;
     int twoDigits = 0;
     int vecSize = 0;
+    largeIntegers num1 = *this;
+    largeIntegers num2 = lgInt;
+    int num1Size = this->largeNum.size();
+    int num2Size = lgInt.largeNum.size();
+    //this->largeNum.at(num1Size - 1) == '-' && lgInt.largeNum.at(num2Size - 1) != '-'
+    if (this->num < lgInt.num && this->largeNum.at(num1Size - 1) == '-') {
+        num1.largeNum.pop_back();
+        retNum = num1 - num2;
+        
+    }
     
     if (this->largeNum.size() > lgInt.largeNum.size()) {
         vecSize = this->largeNum.size();
