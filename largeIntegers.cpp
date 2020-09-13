@@ -1,4 +1,5 @@
 #include "largeIntegers.hpp"
+#include <cmath>
 
 largeIntegers::largeIntegers(){}
 largeIntegers::largeIntegers(string newNum) {
@@ -46,62 +47,89 @@ largeIntegers largeIntegers::operator+(const largeIntegers& lgInt) {
     largeIntegers num2 = lgInt;
     int num1Size = this->largeNum.size();
     int num2Size = lgInt.largeNum.size();
-    //this->largeNum.at(num1Size - 1) == '-' && lgInt.largeNum.at(num2Size - 1) != '-'
-    if (this->num < lgInt.num && this->largeNum.at(num1Size - 1) == '-') {
+
+    if (num1.largeNum.at(num1Size - 1) == '-' && num2.largeNum.at(num2Size - 1) != '-') {
         num1.largeNum.pop_back();
+        num2 = num1;
+        num1 = lgInt;
+        retNum = num1 - num2;
+    } else if (num1.largeNum.at(num1Size - 1) != '-' && num2.largeNum.at(num2Size - 1) == '-') {
+        num2.largeNum.pop_back();
+        num1 = num2;
+        num2 = *this;
         retNum = num1 - num2;
         
-    }
-    
-    if (this->largeNum.size() > lgInt.largeNum.size()) {
-        vecSize = this->largeNum.size();
+        twoDigits = abs(stoi(num1.num));
+        
+        if (twoDigits > stoi(num2.num)) {
+            retNum.largeNum.push_back('-');
+        } else {
+            retNum.largeNum.pop_back();
+        }
     } else {
-        vecSize = lgInt.largeNum.size();
-    }
     
-    while (x < vecSize) {
-        if (this->largeNum.size() > x && lgInt.largeNum.size() > x) {
-            if (plusOne) {
-                tempNum = (this->largeNum.at(x) + lgInt.largeNum.at(x)) - '0';
-                tempNum++;
-            } else {
-                tempNum = (this->largeNum.at(x) + lgInt.largeNum.at(x)) - '0';
-            }
-            
-            if (tempNum <= '9') {
+        if (num1.largeNum.at(num1Size - 1) == '-' && num2.largeNum.at(num2Size - 1) == '-') {
+            isNegative = true;
+            num1.largeNum.pop_back();
+            num2.largeNum.pop_back();
+        }
+        
+        if (this->largeNum.size() > lgInt.largeNum.size()) {
+            vecSize = num1.largeNum.size();
+        } else {
+            vecSize = num2.largeNum.size();
+        }
+        
+        while (x < vecSize) {
+            if (this->largeNum.size() > x && lgInt.largeNum.size() > x) {
+                if (plusOne) {
+                    tempNum = (this->largeNum.at(x) + lgInt.largeNum.at(x)) - '0';
+                    tempNum++;
+                } else {
+                    tempNum = (this->largeNum.at(x) + lgInt.largeNum.at(x)) - '0';
+                }
+                
+                if (tempNum <= '9') {
+                    retNum.largeNum.push_back(tempNum);
+                    plusOne = false;
+                } else {
+                    twoDigits = (int)(tempNum);
+                    tempNum = DecimalConverter(twoDigits);
+                    //tempNum = tempNum - 10;
+                    retNum.largeNum.push_back(tempNum);
+                    plusOne = true;
+                }
+            } else if (this->largeNum.size() > x ) {
+                tempNum = this->largeNum.at(x);
+                if (plusOne) {
+                    tempNum++;
+                }
                 retNum.largeNum.push_back(tempNum);
                 plusOne = false;
             } else {
-                twoDigits = (int)(tempNum);
-                tempNum = DecimalConverter(twoDigits);
+                tempNum = lgInt.largeNum.at(x);
+                if (plusOne) {
+                    tempNum++;
+                }
                 retNum.largeNum.push_back(tempNum);
-                plusOne = true;
+                plusOne = false;
             }
-        } else if (this->largeNum.size() > x ) {
-            tempNum = this->largeNum.at(x);
-            if (plusOne) {
-                tempNum++;
-            }
-            retNum.largeNum.push_back(tempNum);
-            plusOne = false;
-        } else {
-            tempNum = lgInt.largeNum.at(x);
-            if (plusOne) {
-                tempNum++;
-            }
-            retNum.largeNum.push_back(tempNum);
-            plusOne = false;
+            
+            x++;
         }
         
-        x++;
+        if (plusOne) {
+            retNum.largeNum.push_back('1');
+        }
+        
+        if (isNegative) {
+            retNum.largeNum.push_back('-');
+        }
     }
     
-    if (plusOne) {
-        retNum.largeNum.push_back('1');
-    }
-    
+    retNum.num.clear();
     retNum.num.append(retNum.largeNum.rbegin(), retNum.largeNum.rend());
-    cout << "num1 + num2 = " << retNum;
+    //cout << "num1 + num2 = " << retNum;
     
     return retNum;
 }
@@ -176,10 +204,10 @@ largeIntegers largeIntegers::operator-(const largeIntegers& lgInt) {
     }
         
     retNum.num.append(retNum.largeNum.rbegin(), retNum.largeNum.rend());
-        
+    //cout << "num1 - num2 = " << retNum;
     }
     
-    cout << "num1 - num2 = " << retNum;
+    //cout << "num1 - num2 = " << retNum;
     
     return retNum;
 }

@@ -12,8 +12,13 @@ int main() {
         cin >> num2;
         cout << "num1: " << num1;
         cout << "num2: " << num2;
+        
         newNum = num1 + num2;
+        cout << "num1 + num2 = " << newNum;
+        
         newNum = num1 - num2;
+        cout << "num1 - num2 = " << newNum;
+        
         newNum = num1 == num2;
         newNum = num1 != num2;
         newNum = num1 > num2;
