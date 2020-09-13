@@ -37,7 +37,6 @@ istream& operator>> (istream& input, largeIntegers& lgInt) {
 
 largeIntegers largeIntegers::operator+(const largeIntegers& lgInt) {
     largeIntegers retNum;
-    int diffSize = 0;
     bool plusOne, isNegative = false;
     int x = 0;
     char tempNum;
@@ -72,16 +71,18 @@ largeIntegers largeIntegers::operator+(const largeIntegers& lgInt) {
             isNegative = true;
             num1.largeNum.pop_back();
             num2.largeNum.pop_back();
+            num1Size--;
+            num2Size--;
         }
         
-        if (this->largeNum.size() > lgInt.largeNum.size()) {
-            vecSize = num1.largeNum.size();
+        if (num1Size > num2Size) {
+            vecSize = num1Size;
         } else {
-            vecSize = num2.largeNum.size();
+            vecSize = num2Size;
         }
         
         while (x < vecSize) {
-            if (this->largeNum.size() > x && lgInt.largeNum.size() > x) {
+            if (num1Size > x && num2Size > x) {
                 if (plusOne) {
                     tempNum = (this->largeNum.at(x) + lgInt.largeNum.at(x)) - '0';
                     tempNum++;
@@ -99,15 +100,15 @@ largeIntegers largeIntegers::operator+(const largeIntegers& lgInt) {
                     retNum.largeNum.push_back(tempNum);
                     plusOne = true;
                 }
-            } else if (this->largeNum.size() > x ) {
-                tempNum = this->largeNum.at(x);
+            } else if (num1Size > x ) {
+                tempNum = num1.largeNum.at(x);
                 if (plusOne) {
                     tempNum++;
                 }
                 retNum.largeNum.push_back(tempNum);
                 plusOne = false;
             } else {
-                tempNum = lgInt.largeNum.at(x);
+                tempNum = num2.largeNum.at(x);
                 if (plusOne) {
                     tempNum++;
                 }
@@ -129,7 +130,6 @@ largeIntegers largeIntegers::operator+(const largeIntegers& lgInt) {
     
     retNum.num.clear();
     retNum.num.append(retNum.largeNum.rbegin(), retNum.largeNum.rend());
-    //cout << "num1 + num2 = " << retNum;
     
     return retNum;
 }
@@ -138,76 +138,98 @@ largeIntegers largeIntegers::operator-(const largeIntegers& lgInt) {
     largeIntegers retNum;
     largeIntegers num1 = *this;
     largeIntegers num2 = lgInt;
+    largeIntegers tempObj;
     int x = 0;
     char tempNum;
     int num1Size = this->largeNum.size();
     int num2Size = lgInt.largeNum.size();
-    bool isNegative = false;
+    bool isNegative, doubleNeg, isLarger = false;
     
     if (num1.num == num2.num) {
         retNum.num.push_back('0');
-    } else {
-    
-    if (num1Size == num2Size) {
-        bool isLarger = false;
-        
-        while (num1Size > x && !isLarger) {
-            --num1Size;
-            
-            if (num1.largeNum.at(num1Size) > num2.largeNum.at(num1Size)) {
-                isLarger = true;
-            } else if (num1.largeNum.at(num1Size) == num2.largeNum.at(num1Size)) {
-                isLarger = false;
-            } else {
-                isLarger = true;
-                isNegative = true;
-                num1 = lgInt;
-                num2 = *this;
-            }
-        }
-        
-        num1Size = num1.largeNum.size();
-        
-    } else if (num1Size < num2Size) {
-        isNegative = true;
-        num1 = lgInt;
-        num2 = *this;
-        num1Size = num1.largeNum.size();
-        num2Size = num2.largeNum.size();
-    }
-    
-    while (x < num1Size) {
-        if (num1Size > x && num2Size > x) {
-            if (num1.largeNum.at(x) < num2.largeNum.at(x)) {
-                num1.largeNum.at(x+1)--;
-                tempNum = num1.largeNum.at(x) + 10;
-                tempNum = (tempNum - num2.largeNum.at(x)) + '0';
-            } else {
-                tempNum = (num1.largeNum.at(x) - num2.largeNum.at(x)) + '0';
-            }
-            
-            retNum.largeNum.push_back(tempNum);
-        } else {
-            tempNum = num1.largeNum.at(x);
-            retNum.largeNum.push_back(tempNum);
-        }
-        
-        x++;
-    }
-    
-    if (retNum.largeNum.at(x-1) == '0') {
-        retNum.largeNum.pop_back();
-    }
-    
-    if (isNegative) {
+        return retNum;
+    } else if (num1.largeNum.at(num1Size - 1) == '-' && num2.largeNum.at(num2Size - 1) != '-') {
+        num1.largeNum.pop_back();
+        retNum = num1 + num2;
         retNum.largeNum.push_back('-');
-    }
+    } else if (num1.largeNum.at(num1Size - 1) != '-' && num2.largeNum.at(num2Size - 1) == '-') {
+        num2.largeNum.pop_back();
+        retNum = num1 + num2;
+    } else {
+        if (num1.largeNum.at(num1Size - 1) == '-' && num2.largeNum.at(num2Size - 1) == '-') {
+            num1.largeNum.pop_back();
+            num2.largeNum.pop_back();
+            num1Size--;
+            num2Size--;
+            doubleNeg = true;
+        }
         
-    retNum.num.append(retNum.largeNum.rbegin(), retNum.largeNum.rend());
-    //cout << "num1 - num2 = " << retNum;
+        if (num1Size == num2Size) {
+            //bool isLarger = false;
+            
+            while (num1Size > x && !isLarger) {
+                num1Size--;
+                
+                if (num1.largeNum.at(num1Size) > num2.largeNum.at(num1Size)) {
+                    isLarger = true;
+                } else if (num1.largeNum.at(num1Size) == num2.largeNum.at(num1Size)) {
+                    isLarger = false;
+                } else {
+                    isLarger = true;
+                    isNegative = true;
+                    tempObj = num1;
+                    num1 = num2;
+                    num2 = tempObj;
+                    num1Size = num1.largeNum.size();
+                    num2Size = num2.largeNum.size();
+                }
+            }
+            
+            num1Size = num1.largeNum.size();
+            
+        } else if (num1Size < num2Size) {
+            isNegative = true;
+            tempObj = num1;
+            num1 = num2;
+            num2 = tempObj;
+            num1Size = num1.largeNum.size();
+            num2Size = num2.largeNum.size();
+        }
+        
+        while (x < num1Size) {
+            if (num1Size > x && num2Size > x) {
+                if (num1.largeNum.at(x) < num2.largeNum.at(x)) {
+                    num1.largeNum.at(x+1)--;
+                    tempNum = num1.largeNum.at(x) + 10;
+                    tempNum = (tempNum - num2.largeNum.at(x)) + '0';
+                } else {
+                    tempNum = (num1.largeNum.at(x) - num2.largeNum.at(x)) + '0';
+                }
+                
+                retNum.largeNum.push_back(tempNum);
+            } else {
+                tempNum = num1.largeNum.at(x);
+                retNum.largeNum.push_back(tempNum);
+            }
+            
+            x++;
+        }
+        
+        if (retNum.largeNum.at(x-1) == '0') {
+            retNum.largeNum.pop_back();
+        }
+        
+        if ((num1.num.at(0) != '-' && num2.num.at(0) != '-' && isLarger) || ((num1.num.at(0) == '-' && num2.num.at(0) == '-') && !isLarger) || (num2.num.at(0) == '-')) {
+            retNum.largeNum.push_back('-');
+        }
+        
+//        if ((isNegative && !doubleNeg) && (doubleNeg && this->num < lgInt.num) && (this->num > lgInt.num)) {
+//            retNum.largeNum.push_back('-');
+//        }
     }
     
-    //cout << "num1 - num2 = " << retNum;
+    retNum.num.clear();
+    retNum.num.append(retNum.largeNum.rbegin(), retNum.largeNum.rend());
     
     return retNum;
 }
