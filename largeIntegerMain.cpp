@@ -1,3 +1,8 @@
+/*
+Stahl, Daniel
+CS 236, Section #25704
+Fall 2020
+*/
 #include "largeIntegers.hpp"
 
 int main() {

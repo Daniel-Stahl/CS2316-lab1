@@ -22,10 +22,4 @@ public:
     largeIntegers operator>=(const largeIntegers& lgInt);
     largeIntegers operator<(const largeIntegers& lgInt);
     largeIntegers operator<=(const largeIntegers& lgInt);
-    
-    char DecimalConverter(int decimal);
-    
-    void outputLargeIntegers();
-    
-    
 };

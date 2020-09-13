@@ -66,7 +66,6 @@ largeIntegers largeIntegers::operator+(const largeIntegers& lgInt) {
             retNum.largeNum.pop_back();
         }
     } else {
-    
         if (num1.largeNum.at(num1Size - 1) == '-' && num2.largeNum.at(num2Size - 1) == '-') {
             isNegative = true;
             num1.largeNum.pop_back();
@@ -94,9 +93,7 @@ largeIntegers largeIntegers::operator+(const largeIntegers& lgInt) {
                     retNum.largeNum.push_back(tempNum);
                     plusOne = false;
                 } else {
-                    twoDigits = (int)(tempNum);
-                    tempNum = DecimalConverter(twoDigits);
-                    //tempNum = tempNum - 10;
+                    tempNum = tempNum - 10;
                     retNum.largeNum.push_back(tempNum);
                     plusOne = true;
                 }
@@ -311,14 +308,3 @@ largeIntegers largeIntegers::operator<=(const largeIntegers& lgInt) {
     
     return retNum;
 }
-
-char largeIntegers::DecimalConverter(int decimal) {
-    char c;
-    int tempNum = 0;
-    
-    tempNum = (decimal - 48) - 10;
-    c = '0' + tempNum;
-    
-    return c;
-}
-
