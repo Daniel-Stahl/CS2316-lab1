@@ -165,8 +165,6 @@ largeIntegers largeIntegers::operator-(const largeIntegers& lgInt) {
         }
         
         if (num1Size == num2Size) {
-            //bool isLarger = false;
-            
             while (num1Size > x && !isLarger) {
                 num1Size--;
                 
@@ -219,13 +217,9 @@ largeIntegers largeIntegers::operator-(const largeIntegers& lgInt) {
             retNum.largeNum.pop_back();
         }
         
-        if ((num1.num.at(0) != '-' && num2.num.at(0) != '-' && isLarger) || ((num1.num.at(0) == '-' && num2.num.at(0) == '-') && !isLarger) || (num2.num.at(0) == '-')) {
+        if ((this->num.at(0) != '-' && lgInt.num.at(0) != '-' && isLarger) || ((this->num.at(0) == '-' && lgInt.num.at(0) == '-') && !isLarger) || (this->num.at(0) == '-' && lgInt.num.at(0) != '-') ) {
             retNum.largeNum.push_back('-');
         }
-        
-//        if ((isNegative && !doubleNeg) && (doubleNeg && this->num < lgInt.num) && (this->num > lgInt.num)) {
-//            retNum.largeNum.push_back('-');
-//        }
     }
     
     retNum.num.clear();
